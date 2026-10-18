@@ -1,10 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-first-react</title>
+    <title>SPA Router Demo - Single Page Application Navigation Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Kuzen Tag Script (áp dụng cho tất cả các trang) -->
+    <script>
+      window.kuzenTagAsyncInit = function() {
+          window.kuzen_tag.add_query_parameter_url([]);
+          window.kuzen_tag.set_custom_value('pscenario', 'pscenario-SPA');
+          window.kuzen_tag.set_custom_value('custom1', 'custom1');
+          window.kuzen_tag.set_custom_value('custom2', 'custom2');
+      };
+      (function() {
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = 'https://stg-tag-v2.kuzen.io?tracking_code=KT_G514U5PqiIXBfA%3D%3D339&line=1';
+          script.async = true;
+          document.head.appendChild(script);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
