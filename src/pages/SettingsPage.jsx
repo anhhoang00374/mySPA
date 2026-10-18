@@ -1,8 +1,9 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useApp, ACCENT_THEMES } from '../context/AppContext';
 
 export default function SettingsPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     activeAccent,
     setActiveAccent,
@@ -13,6 +14,8 @@ export default function SettingsPage() {
     routeTransitions,
     initialLoadTime,
   } = useApp();
+
+  const queryParamsList = Array.from(searchParams.entries());
 
   return (
     <div className="page-wrapper">
@@ -30,7 +33,7 @@ export default function SettingsPage() {
           <div>
             <h1 className="page-title">⚙️ System Control & Settings</h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              Trang số 3: Tuỳ biến giao diện động và xem lịch sử điều hướng SPA thời gian thực
+              Trang số 3: Tuỳ biến giao diện động, kiểm tra Query Params và xem lịch sử điều hướng SPA
             </p>
           </div>
         </div>
@@ -43,6 +46,86 @@ export default function SettingsPage() {
             ← Sang Showcase (Trang 2)
           </Link>
         </div>
+      </div>
+
+      {/* Query Parameters Inspector Section */}
+      <div className="settings-section" style={{ border: queryParamsList.length > 0 ? '1px solid var(--primary-accent)' : undefined }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div>
+            <h2 className="settings-heading" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span>🔍</span> Bộ Kiểm Tra URL Query Parameters
+              {queryParamsList.length > 0 && (
+                <span className="badge-tag" style={{ background: 'rgba(99, 102, 241, 0.2)', color: 'var(--primary-accent)', borderColor: 'var(--primary-accent)' }}>
+                  {queryParamsList.length} tham số phát hiện
+                </span>
+              )}
+            </h2>
+            <p className="settings-sub" style={{ marginBottom: 0 }}>
+              Hệ thống đã hỗ trợ đầy đủ nhận Query Param ở cả <code>/setting?key=value</code> và <code>/settings?key=value</code> mà không bị lỗi trang.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <button
+              className="btn-back"
+              style={{ fontSize: '0.8rem', color: 'var(--primary-accent)' }}
+              onClick={() => setSearchParams({ key: 'value', pscenario: 'pscenario-SPA' })}
+            >
+              + Gán ?key=value
+            </button>
+            {queryParamsList.length > 0 && (
+              <button
+                className="btn-back"
+                style={{ fontSize: '0.8rem' }}
+                onClick={() => setSearchParams({})}
+              >
+                ✕ Xoá Params
+              </button>
+            )}
+          </div>
+        </div>
+
+        {queryParamsList.length > 0 ? (
+          <div className="logs-table-wrapper" style={{ marginTop: '1rem' }}>
+            <table className="logs-table">
+              <thead>
+                <tr>
+                  <th>Tên Param (Key)</th>
+                  <th>Giá Trị (Value)</th>
+                  <th>Trạng Thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                {queryParamsList.map(([key, value], idx) => (
+                  <tr key={idx}>
+                    <td style={{ fontFamily: 'var(--font-mono)', color: 'var(--primary-accent)', fontWeight: 700 }}>
+                      {key}
+                    </td>
+                    <td style={{ fontFamily: 'var(--font-mono)', color: '#fff' }}>
+                      {value}
+                    </td>
+                    <td>
+                      <span className="badge-tag" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)' }}>
+                        ✓ Sẵn sàng cho Kuzen Tag & SPA
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div style={{ 
+            background: 'rgba(255, 255, 255, 0.02)', 
+            padding: '1rem', 
+            borderRadius: '10px', 
+            marginTop: '1rem',
+            fontSize: '0.85rem',
+            color: 'var(--text-dim)'
+          }}>
+            ℹ️ Hiện chưa có query param nào trên URL. Bạn có thể gõ trực tiếp trên thanh địa chỉ ví dụ: <code>/setting?key=value</code> hoặc bấm nút <strong>"+ Gán ?key=value"</strong> ở trên.
+          </div>
+        )}
       </div>
 
       {/* Theme Accent Picker */}

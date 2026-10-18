@@ -7,8 +7,8 @@ export default function SpaStatusBadge() {
   const { initialLoadTime, routeTransitions, recordNavigation } = useApp();
 
   useEffect(() => {
-    recordNavigation(location.pathname);
-  }, [location.pathname]);
+    recordNavigation(location.pathname + location.search);
+  }, [location.pathname, location.search]);
 
   return (
     <footer className="spa-diagnostics-bar">
@@ -23,7 +23,7 @@ export default function SpaStatusBadge() {
         <div className="diag-item">
           <span className="diag-label">Route Hiện Tại:</span>
           <span className="diag-val" style={{ color: 'var(--primary-accent)' }}>
-            {location.pathname}
+            {location.pathname}{location.search}
           </span>
         </div>
       </div>
