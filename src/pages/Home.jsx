@@ -1,9 +1,17 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 export default function Home() {
   const navigate = useNavigate();
   const { globalCounter, setGlobalCounter, routeTransitions } = useApp();
+  const [lineIdInput, setLineIdInput] = useState('');
+
+  const handleNavigateToLine = (e) => {
+    if (e) e.preventDefault();
+    const val = lineIdInput.trim() || 'U_sample_line_id';
+    navigate(`/line?line_id=${encodeURIComponent(val)}`);
+  };
 
   return (
     <div className="page-wrapper">
@@ -20,6 +28,90 @@ export default function Home() {
           Khi bạn nhấn chuyển trang, JavaScript (React Router) sẽ chặn tải lại trình duyệt, cập nhật URL 
           thông qua History API và hoán đổi thành phần hiển thị ngay lập tức trong chớp mắt!
         </p>
+      </section>
+
+      {/* LINE ID Input & Navigation Section */}
+      <section style={{
+        background: 'linear-gradient(135deg, rgba(6, 199, 85, 0.12), rgba(18, 24, 38, 0.8))',
+        border: '1px solid rgba(6, 199, 85, 0.35)',
+        borderRadius: '18px',
+        padding: '1.75rem',
+        margin: '1.5rem 0 2.5rem',
+        boxShadow: '0 10px 30px -10px rgba(6, 199, 85, 0.25)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1rem' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
+              <span style={{ background: '#06C755', color: '#fff', fontSize: '0.72rem', fontWeight: 800, padding: '2px 8px', borderRadius: '4px' }}>
+                TÍNH NĂNG MỚI
+              </span>
+              <h2 style={{ fontSize: '1.25rem', color: '#fff', fontWeight: 700, margin: 0 }}>
+                💬 Chuyển Trang LINE Kèm Tham Số <code>?line_id=...</code>
+              </h2>
+            </div>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: 0 }}>
+              Nhập giá trị bạn muốn vào ô bên dưới, sau đó bấm nút để chuyển sang trang LINE với URL dạng <code>/line?line_id=giá_trị_đã_nhập</code>
+            </p>
+          </div>
+        </div>
+
+        <form onSubmit={handleNavigateToLine} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <input
+            id="input-line-id"
+            type="text"
+            value={lineIdInput}
+            onChange={(e) => setLineIdInput(e.target.value)}
+            placeholder="Nhập giá trị line_id (ví dụ: U1234567890abcdef, test_user_01,...)"
+            style={{
+              flex: '1',
+              minWidth: '280px',
+              padding: '0.85rem 1.25rem',
+              borderRadius: '12px',
+              background: 'rgba(0, 0, 0, 0.35)',
+              border: '1px solid rgba(6, 199, 85, 0.4)',
+              color: '#fff',
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.95rem',
+              outline: 'none',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+            }}
+          />
+          <button
+            id="btn-goto-line"
+            type="submit"
+            className="btn-navigate"
+            style={{ 
+              width: 'auto', 
+              padding: '0.85rem 1.75rem', 
+              background: '#06C755', 
+              borderColor: '#06C755',
+              boxShadow: '0 4px 15px rgba(6, 199, 85, 0.4)',
+              fontSize: '0.95rem' 
+            }}
+          >
+            <span>Chuyển Sang Trang LINE</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </form>
+
+        {/* Quick sample chips */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.85rem', flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>Gợi ý nhanh:</span>
+          {['U1029384756abcdef', 'kuzen_vip_member', 'hoang_line_test_99'].map((sample) => (
+            <button
+              key={sample}
+              type="button"
+              className="btn-back"
+              style={{ fontSize: '0.75rem', padding: '0.25rem 0.6rem', color: '#06C755', borderColor: 'rgba(6, 199, 85, 0.3)' }}
+              onClick={() => setLineIdInput(sample)}
+            >
+              + {sample}
+            </button>
+          ))}
+        </div>
       </section>
 
       {/* 3 Main Navigation Buttons Section */}

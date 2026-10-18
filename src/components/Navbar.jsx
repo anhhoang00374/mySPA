@@ -33,6 +33,9 @@ export default function Navbar() {
         <NavLink to="/settings" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
           <span>⚙️</span> Cài Đặt
         </NavLink>
+        <NavLink to="/line?line_id=U_demo_user" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+          <span>💬</span> LINE
+        </NavLink>
       </nav>
 
       <div className="header-telemetry">

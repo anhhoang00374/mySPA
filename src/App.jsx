@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import AnalyticsPage from './pages/AnalyticsPage';
 import ShowcasePage from './pages/ShowcasePage';
 import SettingsPage from './pages/SettingsPage';
+import LinePage from './pages/LinePage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/showcase" element={<ShowcasePage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/setting" element={<SettingsPage />} />
+              <Route path="/line" element={<LinePage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
